@@ -1481,10 +1481,14 @@ body {
   animation-play-state: paused !important;
 }
 
-/* ===== АДАПТИВНОСТЬ ===== */
+/* ===== АДАПТИВНОСТЬ + ПРОИЗВОДИТЕЛЬНОСТЬ ===== */
 @media (max-width: 600px) {
   .card-inner {
     padding: 28px 22px;
+    /* Уменьшаем blur — самый тяжёлый эффект на мобилке */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px rgba(168, 85, 247, 0.1);
   }
   .card-text {
     min-height: 100px;
@@ -1495,11 +1499,47 @@ body {
   .top-title {
     top: 15px;
   }
+
+  /* Отключить светящиеся частицы на мобилке — сильно тормозят */
+  .flower__light {
+    display: none !important;
+  }
+
+  /* Упростить тени цветов */
+  .flower__leafs::after {
+    display: none;
+  }
+
+  /* Упростить overlay */
+  .flower__grass__overlay {
+    display: none;
+  }
+
+  /* Уменьшить количество длинных листьев */
+  .long-g--5,
+  .long-g--6,
+  .long-g--7 {
+    display: none;
+  }
+
+  /* GPU-ускорение для анимаций */
+  .petal {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  .card {
+    will-change: transform, opacity;
+  }
 }
 
 @media (max-width: 400px) {
   .flowers {
     transform: scale(0.5);
+  }
+  .card-inner {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 }
 
