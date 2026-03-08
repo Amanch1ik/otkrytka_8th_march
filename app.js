@@ -63,6 +63,14 @@ function showVideoIntro() {
     // Начать с 4-й секунды (обрезаем начало)
     video.currentTime = 4;
 
+    // Перестраховка для мобильных — если видео началось с 0, перемотать
+    video.addEventListener("playing", function onFirstPlay() {
+        if (video.currentTime < 3.5) {
+            video.currentTime = 4;
+        }
+        video.removeEventListener("playing", onFirstPlay);
+    });
+
     // Попытаться запустить видео
     video.play().catch(() => {
         // Автовоспроизведение заблокировано — показать кнопку "Смотреть"
